@@ -1,14 +1,14 @@
 import mongoose from "mongoose"; 
 const dbConnection=async (MONGO_URL)=>{ 
     try{ 
-        const DB_OPTION={ 
+        const DB_OPTIONS={ 
              dbname:'HotelChain',
         } 
-        await mongoose.connect(MONGO_URL,DB_OPTION);
+        await mongoose.connect(MONGO_URL,DB_OPTIONS);
         console.log("Database setup Sucssessful");
     }
     catch(err){ 
-        console.log("Error in the Server");
+        console.log(err);
     }
 }
-export default dbConnection; 
+export default dbConnection
