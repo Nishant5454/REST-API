@@ -26,7 +26,7 @@ static getdoc=async(req,res)=>{
 } 
 static getdocById=async(req,res)=>{ 
     try{ 
-        const result=await Hotelmodel.find(req.params.id); 
+        const result=await Hotelmodel.findById(req.params.id); 
         res.send(result)
     } 
     catch(err){ 
