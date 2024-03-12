@@ -4,7 +4,9 @@ import dbConnection from "./connection/connection.js";
 import web from "./routes/web.js";
 const app=express();  
 const PORT=3000; 
-const MONGO_URL= "mongodb://localhost:27017"
+const MONGO_URL= "mongodb://localhost:27017" 
+import body Parser from 'body-parser' //for Middlware
+
 
 
 dbConnection(MONGO_URL)
