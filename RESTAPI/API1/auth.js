@@ -42,5 +42,36 @@ app.post('/admin/signup',(req,res)=>{
 
     
 
-});
+}); 
+app.post('/admin/login',adminAuthentication,(req,res)=>{ 
+    res.json({message:`SUCSESSFULLY LOGGED`})
+});  
+app.post('/admin/courses',adminAuthentication,(req,res)=>{ 
+    const course=req.body; 
+    course.ID=Date.now();
+    COURSES.push(course);
+    res.status(200).json({message:`Course Added Sucsessfully`,courseID:course.ID});
+
+}); 
+app.put('/admin/courses/:courseID',adminAuthentication,(req,res)=>{ 
+    const courseID=parseInt(req.params.courseID); 
+    const course=COURSES.find(a=>a.id===courseID); 
+    if(course){  
+        Object.assign(course,req.body);
+        res.json({message:`Course Updated Sucsessfully`}); 
+    } 
+    else{ 
+        res.status(404).json({message:`Course not found in the catalog`});
+    }
+}); 
+app.get('/admin/coures',(req,res)=>{ 
+    res.json({course:COURSES});
+}); 
+
+
+
+
+
+
+
 
