@@ -1,6 +1,5 @@
 import express from "express"; 
-import bodyParser from "bodyparser"; 
-import e from "express";
+import bodyParser from "body-parser"
 const app=express(); 
 const PORT=4000;  
  let ADMIN=[]; 
@@ -66,7 +65,41 @@ app.put('/admin/courses/:courseID',adminAuthentication,(req,res)=>{
 }); 
 app.get('/admin/coures',(req,res)=>{ 
     res.json({course:COURSES});
+});  
+app.post('/user/signup',(req,res)=>{ 
+    const user={
+        username:req.body.username,
+        password:req.body.password, 
+        purchasedCourse:[]
+}
+USERS.push(user); 
+res.json({message:`User data sucsessfully Created`})
 }); 
+app.post('/user/login',userAuthentication,(req,res)=>{ 
+    res.json({message:`User LoggedIn Sucsessfully`})
+}); 
+app.get('/user/courses',userAuthentication,(req,res)=>{ 
+    let filtredcourses=[]; 
+    for(let i=0;i<COURSES.length();i++){ 
+        if(COURSES[i].published){ 
+            filtredcourses.push(COURSES[i]);
+        }
+    } 
+    res.json({courses:filtredcourses});
+}); 
+app.post('user/courses/:coursedID',(req,res)=>{ 
+     const courseID=Number(req.params.coursedID); 
+     const coures=COURSES.find(a=>a.id===courseID&&a.published);
+     if(coures){ 
+        res.json({message:`Course Sucsessfully Purchases`});
+     }
+    else{ 
+        res.status(401).json({message:`Course Not avilable in the catalouge`})
+    }
+}) 
+app.listen(PORT); 
+
+
 
 
 
